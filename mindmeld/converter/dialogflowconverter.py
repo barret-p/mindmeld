@@ -217,9 +217,9 @@ class DialogFlowConverter(Converter):
     def create_init(self):
         with open(os.path.join(self.mindmeld_project_directory, "__init__.py"), 'w') as target:
             begin_info = ["\"\"\"This module contains the MindMeld application\"\"\"",
-            "from mindmeld import Application",
-            "app = Application(__name__)",
-            "__all__ = ['app']"]
+                          "from mindmeld import Application",
+                          "app = Application(__name__)",
+                          "__all__ = ['app']"]
 
             for info in begin_info:
                 target.write(info + "\n\n")
@@ -229,7 +229,7 @@ class DialogFlowConverter(Converter):
             # iterate over all the intents
             for i, (main, languages) in enumerate(intents.items()):
                 df_main = os.path.join(self.dialogflow_project_directory,
-                                                      "intents", main + ".json")
+                                       "intents", main + ".json")
 
                 with open(df_main) as source:
                     datastore = json.load(source)
@@ -247,9 +247,9 @@ class DialogFlowConverter(Converter):
                                 function_name = "renameMe" + str(i)
                                 handles = ["intent=" + "'" + datastore["name"] + "''"]
 
-                            target.write(DialogFlowConverter.create_function(function_name=function_name,
-                                                                        handles=handles,
-                                                                        replies=replies) + "\n\n")
+                            target.write(DialogFlowConverter.create_function(function_name,
+                                                                             handles,
+                                                                             replies) + "\n\n")
 
     def create_main(self):
         pass
