@@ -20,7 +20,7 @@ import json
 import logging
 from sklearn.model_selection import train_test_split
 
-from mindmeld.converter.converter import Converter
+from converter import Converter  # from mindmeld.converter.converter import Converter
 
 
 logger = logging.getLogger(__name__)
@@ -171,7 +171,7 @@ class DialogFlowConverter(Converter):
 
         w = {"entities": "entries", "intents": "usersays"}
         p = r".+(?<=(_" + w[level] + "_))(.*)(?=(.json))"
-
+        
         info = {}
         for name in files:
             match = re.match(p, name)
@@ -200,7 +200,7 @@ class DialogFlowConverter(Converter):
         self._create_intents_directories(intents)
 
     # ^ create training data
-
+    
     @staticmethod
     def create_handle(params):
         return "@app.handle(" + params + ")"
@@ -246,6 +246,7 @@ class DialogFlowConverter(Converter):
                     for response in datastore["responses"]:
                         for message in response["messages"]:
                             data = message["speech"]
+                            
                             replies = data if isinstance(data, list) else [data]
 
                             if datastore["fallbackIntent"]:
